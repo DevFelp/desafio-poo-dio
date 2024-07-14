@@ -8,9 +8,6 @@ public class Mentoria extends Conteudo{
 
     @Override
     public double calcularTotalXp() {
-    return this.conteudosConcluidos.stream()
-            .mapToDouble(Conteudo::calcularXp)
-            .sum();
 }
     public Mentoria() {
     }
