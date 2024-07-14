@@ -7,10 +7,11 @@ public class Mentoria extends Conteudo{
     private LocalDate data;
 
     @Override
-    public double calcularXp() {
-        return XP_PADRAO + 20d;
-    }
-
+    public double calcularTotalXp() {
+    return this.conteudosConcluidos.stream()
+            .mapToDouble(Conteudo::calcularXp)
+            .sum();
+}
     public Mentoria() {
     }
 
