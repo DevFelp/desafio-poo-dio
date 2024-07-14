@@ -12,25 +12,20 @@ public class Dev {
         bootcamp.getDevsInscritos().add(this);
     }
 
-    public void progredir() {
-        Optional<Conteudo> conteudo = this.conteudosInscritos.stream().findFirst();
-        if(conteudo.isPresent()) {
-            this.conteudosConcluidos.add(conteudo.get());
-            this.conteudosInscritos.remove(conteudo.get());
-        } else {
-            System.err.println("Você não está matriculado em nenhum conteúdo!");
-        }
-    }
-
-    public double calcularTotalXp() {
-        Iterator<Conteudo> iterator = this.conteudosConcluidos.iterator();
-        double soma = 0;
-        while(iterator.hasNext()){
-            double next = iterator.next().calcularXp();
-            soma += next;
-        }
-        return soma;
-
+  public void progredir() {
+    this.conteudosInscritos.stream().findFirst().ifPresentOrElse(
+        conteudo -> {
+            this.conteudosConcluidos.add(conteudo);
+            this.conteudosInscritos.remove(conteudo);
+        },
+        () -> System.err.println("Você não está matriculado em nenhum conteúdo!")
+    );
+}
+public double calcularTotalXp() {
+    return this.conteudosConcluidos.stream()
+            .mapToDouble(Conteudo::calcularXp)
+            .sum();
+}
         /*return this.conteudosConcluidos
                 .stream()
                 .mapToDouble(Conteudo::calcularXp)
